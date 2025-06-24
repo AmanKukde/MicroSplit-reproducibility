@@ -141,39 +141,59 @@ def plot_input_patches(dataset, num_channels: int, num_samples: int = 3, samples
     old_patch_size = None
     if patch_size is not None:
         old_patch_size = dataset._img_sz
+        print("Grid Size:", dataset._grid_sz, 
+              "Image Size:", dataset._img_sz,
+              "Stride Size:", dataset._stride_sz,
+              "Padded Data Shape:", dataset._padded_data.shape)
         grid_size = dataset._grid_sz
-        dataset.set_img_sz((patch_size,patch_size), grid_size)
+        dataset.set_img_sz((patch_size, patch_size), grid_size)
     
     if samples_idxs is None:
-        # Select 3 random samples from the dataset
+        # Select random samples if not provided
         random_samples = random.sample(range(len(dataset)), num_samples)
-    
+    else:
+        random_samples = samples_idxs
     
     input_count = dataset[0][0].shape[0]
-    img_sz = 3
-    # Plot all dimensions of the selected samples
-    _,ax = plt.subplots(figsize=(img_sz*(input_count + num_channels), img_sz*num_samples), ncols=(input_count + num_channels), nrows=num_samples)
+    img_sz = 3  # Used for figure sizing
+    
+    fig, ax = plt.subplots(
+        figsize=(img_sz * (input_count + num_channels), img_sz * num_samples),
+        ncols=(input_count + num_channels), nrows=num_samples
+    )
+    
+    # Ensure ax is always a 2D array for consistent indexing
+    if num_samples == 1:
+        ax = np.expand_dims(ax, axis=0)
+    if (input_count + num_channels) == 1:
+        ax = np.expand_dims(ax, axis=1)
 
     for i, sample_idx in enumerate(random_samples):
-        inp, sample = dataset[sample_idx]  # Get the target data of the sample
+        inp, sample = dataset[sample_idx]  # Get the input and target data
 
         for input_ch in range(input_count):
-            ax[i, input_ch].imshow(inp[input_ch])
-            if input_ch == 0:
-                ax[i, input_ch].set_title(f"Primary Input")
-            else:    
-                ax[i, input_ch].set_title(f"Input LC[{input_ch}] ")
-        # Plot each dimension
+            ax[i, input_ch].imshow(inp[input_ch], cmap='gray')
+            ax[i, input_ch].set_title(f"Primary Input" if input_ch == 0 else f"Input LC[{input_ch}]")
+            ax[i, input_ch].axis('off')
+
         for channel_idx in range(num_channels):
-            ax[i, input_count+channel_idx].imshow(sample[channel_idx])
-            ax[i, input_count+channel_idx].set_title(f"Channel {channel_idx + 1}")
+            ax[i, input_count + channel_idx].imshow(sample[channel_idx], cmap='gray')
+            ax[i, input_count + channel_idx].set_title(f"Channel {channel_idx + 1}")
+            ax[i, input_count + channel_idx].axis('off')
     
     if old_patch_size is not None:
-        dataset.set_img_sz((old_patch_size,old_patch_size), grid_size)
+        dataset.set_img_sz((old_patch_size, old_patch_size), grid_size)
     
-    clean_ax(ax)
-    return random_samples
+    # Optional: if you have a custom axis cleaning function
+    try:
+        clean_ax(ax)
+    except NameError:
+        pass  # Ignore if clean_ax is not defined
 
+    plt.tight_layout()
+    plt.show()
+
+    return random_samples
 
 def plot_input_patches_3d(dataset, num_channels: int, num_samples: int = 3, samples_idxs=None, patch_size=None):
     old_patch_size = None

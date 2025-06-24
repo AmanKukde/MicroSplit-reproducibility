@@ -26,7 +26,7 @@ def get_data_configs(
         image_size=image_size,
         grid_size=32,
         num_channels=num_channels,
-        multiscale_lowres_count=3,
+        multiscale_lowres_count=1,
         poisson_noise_factor=-1,
         enable_gaussian_noise=False,
         synthetic_gaussian_scale=100,

@@ -1,5 +1,6 @@
 from typing import Callable, Union
 
+from careamics.lvae_training.dataset.types import TilingMode
 import torch
 from numpy.typing import NDArray
 
@@ -9,10 +10,12 @@ from careamics.lvae_training.dataset import (
     MultiChDloader,
     MultiChDloaderRef,
     MultiFileDset,
-    MultiCropDset
+    MultiCropDset,
+    WindowedTilingLCMultiChDloader
 )
+from careamics.lvae_training.dataset.dataclass import WindowedTilingDataset
 
-SplittingDataset = Union[LCMultiChDloader, MultiChDloader, MultiFileDset, MultiCropDset]
+SplittingDataset = Union[WindowedTilingLCMultiChDloader, LCMultiChDloader, MultiChDloader, MultiFileDset, MultiCropDset]
 
 
 def create_train_val_datasets(
@@ -32,12 +35,18 @@ def create_train_val_datasets(
     ]:
         dataset_class = MultiFileDset
     elif train_config.multiscale_lowres_count > 1:
-        dataset_class = LCMultiChDloader
+        if train_config.tiling_mode == TilingMode.WindowedTiling:
+            dataset_class = WindowedTilingLCMultiChDloader 
+        else:
+            dataset_class = LCMultiChDloader
+            
     elif train_config.data_type in [
         DataType.HTH23BData]:
         dataset_class = MultiChDloaderRef
     else:
         dataset_class = MultiChDloader
+    
+    dataset_class = WindowedTilingLCMultiChDloader
 
     train_data = dataset_class(
         train_config,
