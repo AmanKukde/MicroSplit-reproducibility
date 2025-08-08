@@ -9,8 +9,11 @@ from careamics.lvae_training.dataset import (
     MultiChDloader,
     MultiChDloaderRef,
     MultiFileDset,
-    MultiCropDset
+    MultiCropDset, 
+    WindowedTilingDloader,
+    WindowedLCDLoader,
 )
+
 
 SplittingDataset = Union[LCMultiChDloader, MultiChDloader, MultiFileDset, MultiCropDset]
 
@@ -32,13 +35,19 @@ def create_train_val_datasets(
     ]:
         dataset_class = MultiFileDset
     elif train_config.multiscale_lowres_count > 1:
-        dataset_class = LCMultiChDloader
+        if train_config.sliding_window_flag:
+            dataset_class = WindowedLCDLoader
+        else: 
+            dataset_class = LCMultiChDloader
     elif train_config.data_type in [
         DataType.HTH23BData]:
         dataset_class = MultiChDloaderRef
     else:
-        dataset_class = MultiChDloader
-
+        if train_config.sliding_window_flag:
+            dataset_class = WindowedTilingDloader
+        else:
+            dataset_class = MultiChDloader
+    print(f"Dataclass is {dataset_class}")
     train_data = dataset_class(
         train_config,
         datapath,
