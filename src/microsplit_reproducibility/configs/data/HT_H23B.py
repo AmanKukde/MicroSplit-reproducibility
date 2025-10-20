@@ -7,7 +7,8 @@ class HTH23BConfig(DatasetConfig):
     test_frame_idx: int = 8  # Default test frame index
 
 
-def get_data_configs(test_frame_idx=8) -> tuple[HTH23BConfig, HTH23BConfig, HTH23BConfig]:
+def get_data_configs(test_frame_idx=8,sliding_window_flag=False, 
+    multiscale_lowres_count = 3) -> tuple[HTH23BConfig, HTH23BConfig, HTH23BConfig]:
     train_data_config = HTH23BConfig(
         data_type=DataType.HTH23BData,
         datasplit_type=DataSplitType.Train,
@@ -17,7 +18,6 @@ def get_data_configs(test_frame_idx=8) -> tuple[HTH23BConfig, HTH23BConfig, HTH2
         enable_gaussian_noise=False,
         synthetic_gaussian_scale=6675,
         input_has_dependant_noise=True,
-        multiscale_lowres_count=1,
         use_one_mu_std=True,
         train_aug_rotate=True,
         target_separate_normalization=True,
@@ -26,6 +26,8 @@ def get_data_configs(test_frame_idx=8) -> tuple[HTH23BConfig, HTH23BConfig, HTH2
         input_is_sum=True,
         padding_kwargs={"mode": "reflect"},
         overlapping_padding_kwargs={"mode": "reflect"},
+        sliding_window_flag=sliding_window_flag, 
+        multiscale_lowres_count = multiscale_lowres_count
     )
 
     val_data_config = train_data_config.model_copy(

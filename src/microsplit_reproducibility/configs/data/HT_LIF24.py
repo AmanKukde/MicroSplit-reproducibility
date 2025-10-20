@@ -17,7 +17,9 @@ class HTLIF24DataConfig(DatasetConfig):
 
 def get_data_configs(
     dset_type: Literal["high", "mid", "low", "verylow", "2ms", "3ms", "5ms", "20ms", "500ms"],
-    channel_idx_list: list = CH_IDX_LIST,
+    channel_idx_list: list = CH_IDX_LIST, 
+    sliding_window_flag=False, 
+    multiscale_lowres_count = 3
 ) -> tuple[HTLIF24DataConfig, HTLIF24DataConfig, HTLIF24DataConfig]:
     """Get the data configurations to use at training time.
     
@@ -43,7 +45,7 @@ def get_data_configs(
         num_channels=len(channel_idx_list),
         input_idx=len(channel_idx_list) - 1,
         target_idx_list=list(range(len(channel_idx_list) - 1)),
-        multiscale_lowres_count=3,
+        multiscale_lowres_count=multiscale_lowres_count,
         poisson_noise_factor=-1,
         enable_gaussian_noise=False,
         synthetic_gaussian_scale=100,
@@ -54,6 +56,7 @@ def get_data_configs(
         input_is_sum=False,
         padding_kwargs={"mode": "reflect"},
         overlapping_padding_kwargs={"mode": "reflect"},
+        sliding_window_flag=sliding_window_flag
     )
     val_data_config = train_data_config.model_copy(
         update=dict(
