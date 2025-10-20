@@ -5,9 +5,10 @@ class HTH23BConfig(DatasetConfig):
     channel_list: Optional[list[str]] = ["puncta", "foreground"]
     background_values: list[int] = [0, 0]
     test_frame_idx: int = 8  # Default test frame index
+    sliding_window_flag: Optional[bool] = False
 
 
-def get_data_configs(test_frame_idx=8,sliding_window_flag=False, 
+def get_data_configs(test_frame_idx=8, sliding_window_flag=False, 
     multiscale_lowres_count = 3) -> tuple[HTH23BConfig, HTH23BConfig, HTH23BConfig]:
     train_data_config = HTH23BConfig(
         data_type=DataType.HTH23BData,
