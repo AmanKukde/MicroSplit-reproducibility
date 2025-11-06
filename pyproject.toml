@@ -39,7 +39,7 @@ classifiers = [
     "Typing :: Typed",
 ]
 dependencies = [
-    "careamics[examples, wandb]>=0.0.8",
+    "careamics[examples,wandb]>=0.0.8,<=0.0.12",
     "imagecodecs<=2024.9.22",
     "nd2",
     "czifile",
