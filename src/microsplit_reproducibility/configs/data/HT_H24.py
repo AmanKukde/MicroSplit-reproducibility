@@ -7,7 +7,7 @@ class HT_H24Config(DatasetConfig):
     z_stop: int
 
 
-def get_data_configs() -> tuple[HT_H24Config, HT_H24Config]:
+def get_data_configs(sliding_window_flag=False) -> tuple[HT_H24Config, HT_H24Config]:
     train_data_config = HT_H24Config(
         datasplit_type=DataSplitType.Train,
         image_size=(9, 64, 64),
@@ -29,6 +29,7 @@ def get_data_configs() -> tuple[HT_H24Config, HT_H24Config]:
         z_stop=40,
         padding_kwargs={"mode": "reflect"},
         overlapping_padding_kwargs={"mode": "reflect"},
+        sliding_window_flag=sliding_window_flag,
     )
 
     val_data_config = train_data_config.model_copy(
