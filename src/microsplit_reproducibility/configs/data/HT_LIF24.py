@@ -19,7 +19,9 @@ def get_data_configs(
     dset_type: Literal["high", "mid", "low", "verylow", "2ms", "3ms", "5ms", "20ms", "500ms"],
     channel_idx_list: list = CH_IDX_LIST, 
     sliding_window_flag=False, 
-    multiscale_lowres_count = 3
+    multiscale_lowres_count = 3,
+    image_size=[64,64],
+    grid_size=32,
 ) -> tuple[HTLIF24DataConfig, HTLIF24DataConfig, HTLIF24DataConfig]:
     """Get the data configurations to use at training time.
     
@@ -39,8 +41,8 @@ def get_data_configs(
         data_type=DataType.HTLIF24Data,
         dset_type=dset_type,
         datasplit_type=DataSplitType.Train,
-        image_size=[64, 64],
-        grid_size=32,
+        image_size=image_size,
+        grid_size=grid_size,
         channel_idx_list=channel_idx_list,
         num_channels=len(channel_idx_list),
         input_idx=len(channel_idx_list) - 1,
