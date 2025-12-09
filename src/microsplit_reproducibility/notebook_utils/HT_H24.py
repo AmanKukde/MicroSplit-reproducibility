@@ -19,8 +19,11 @@ def load_pretrained_model(model: VAEModule, ckpt_path):
     ckpt_dict = torch.load(ckpt_path, map_location=device, weights_only=True)
     if ckpt_path.startswith("checkpoints"):
         model.load_state_dict(ckpt_dict["state_dict"], strict=True)
-    elif ckpt_path.startswith("pretrained_checkpoints"):
+
+    elif "pretrained_checkpoints" in ckpt_path:
+        print("Path contains pretrained checkpoints")
         model.model.load_state_dict(ckpt_dict["state_dict"], strict=False)
+    
     else:
         raise ValueError(
             "Checkpoint path must start with 'checkpoints' or 'pretrained_checkpoints'."

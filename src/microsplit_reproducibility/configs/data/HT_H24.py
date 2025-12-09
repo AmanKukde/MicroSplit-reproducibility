@@ -10,11 +10,11 @@ class HT_H24Config(DatasetConfig):
 def get_data_configs(sliding_window_flag=False) -> tuple[HT_H24Config, HT_H24Config]:
     train_data_config = HT_H24Config(
         datasplit_type=DataSplitType.Train,
-        image_size=(9, 64, 64),
-        grid_size=(9, 32, 32),
+        image_size=(8, 64, 64),
+        grid_size=(4, 32, 32),
         multiscale_lowres_count=1,
         data_type=DataType.HTH24Data,
-        depth3D=9,
+        depth3D=8,
         mode_3D=True,
         poisson_noise_factor=-1,
         enable_gaussian_noise=False,
