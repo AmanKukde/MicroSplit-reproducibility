@@ -1,0 +1,277 @@
+wandb_version: 1
+
+_wandb:
+  desc: null
+  value:
+    code_path: code/code/Disentangle/disentangle/scripts/run.py
+    python_version: 3.9.18
+    cli_version: 0.15.10
+    framework: huggingface
+    huggingface_version: 4.37.1
+    is_jupyter_run: false
+    is_kaggle_kernel: false
+    start_time: 1749536465.700026
+    t:
+      1:
+      - 1
+      - 5
+      - 9
+      - 11
+      - 41
+      - 49
+      - 53
+      - 55
+      - 80
+      - 103
+      2:
+      - 1
+      - 5
+      - 9
+      - 11
+      - 41
+      - 49
+      - 53
+      - 55
+      - 80
+      - 103
+      3:
+      - 7
+      - 13
+      - 23
+      4: 3.9.18
+      5: 0.15.10
+      6: 4.37.1
+      8:
+      - 5
+    m:
+    - 1: trainer/global_step
+      6:
+      - 3
+    - 1: val_psnr_step
+      5: 1
+      6:
+      - 1
+    - 1: qvar_max:0_step
+      5: 1
+      6:
+      - 1
+    - 1: qvar_max:1_step
+      5: 1
+      6:
+      - 1
+    - 1: qvar_max:2_step
+      5: 1
+      6:
+      - 1
+    - 1: qvar_max:3_step
+      5: 1
+      6:
+      - 1
+    - 1: reconstruction_loss_step
+      5: 1
+      6:
+      - 1
+    - 1: kl_loss_step
+      5: 1
+      6:
+      - 1
+    - 1: training_loss_step
+      5: 1
+      6:
+      - 1
+    - 1: lr_step
+      5: 1
+      6:
+      - 1
+    - 1: epoch
+      5: 1
+      6:
+      - 1
+    - 1: val_psnr_l1
+      5: 1
+      6:
+      - 1
+    - 1: val_psnr_l2
+      5: 1
+      6:
+      - 1
+    - 1: val_psnr_l3
+      5: 1
+      6:
+      - 1
+    - 1: val_loss
+      5: 1
+      6:
+      - 1
+    - 1: val_psnr
+      5: 1
+      6:
+      - 1
+    - 1: val_psnr_epoch
+      5: 1
+      6:
+      - 1
+    - 1: qvar_max:0_epoch
+      5: 1
+      6:
+      - 1
+    - 1: qvar_max:1_epoch
+      5: 1
+      6:
+      - 1
+    - 1: qvar_max:2_epoch
+      5: 1
+      6:
+      - 1
+    - 1: qvar_max:3_epoch
+      5: 1
+      6:
+      - 1
+    - 1: reconstruction_loss_epoch
+      5: 1
+      6:
+      - 1
+    - 1: kl_loss_epoch
+      5: 1
+      6:
+      - 1
+    - 1: training_loss_epoch
+      5: 1
+      6:
+      - 1
+    - 1: lr_epoch
+      5: 1
+      6:
+      - 1
+data:
+  desc: null
+  value:
+    channelwise_quantile: false
+    clip_percentile: 1
+    data_type: 30
+    depth3D: 5
+    deterministic_grid: false
+    enable_gaussian_noise: false
+    image_size: 64
+    input_has_dependant_noise: true
+    input_is_sum: false
+    mode_3D: true
+    multiscale_lowres_count: null
+    normalized_input: true
+    num_channels: 3
+    padding_mode: reflect
+    padding_value: null
+    poisson_noise_factor: -1
+    randomized_channels: false
+    sampler_type: 0
+    subdset_type: liver
+    synthetic_gaussian_scale: 228
+    target_separate_normalization: true
+    threshold: 0.02
+    train_aug_rotate: true
+    use_one_mu_std: true
+datadir:
+  desc: null
+  value: /group/jug/ashesh/data/CARE/care_florian/
+exptname:
+  desc: null
+  value: 2506/D30-M3-S0-L8/6
+git:
+  desc: null
+  value:
+    branch: master
+    changedFiles:
+    - disentangle/configs/care3D_config.py
+    latest_commit: f7d698d4652a465f0752f3168277db3a607c05c2
+    untracked_files: []
+hostname:
+  desc: null
+  value: gnode06
+loss:
+  desc: null
+  value:
+    denoisplit_w: 0.9
+    free_bits: 1.0
+    kl_annealing: false
+    kl_annealtime: 10
+    kl_loss_formulation: denoisplit_usplit
+    kl_min: 1.0e-07
+    kl_start: -1
+    kl_weight: 1.0
+    loss_type: 8
+    reconstruction_weight: 1.0
+    restricted_kl: false
+    usplit_w: 0.1
+model:
+  desc: null
+  value:
+    analytical_kl: false
+    decoder:
+      batchnorm: true
+      blocks_per_layer: 1
+      conv2d_bias: true
+      dropout: 0.1
+      mode_3D: true
+      n_filters: 64
+      res_block_kernel: 3
+      res_block_skip_padding: false
+    enable_noise_model: true
+    encoder:
+      batchnorm: true
+      blocks_per_layer: 1
+      dropout: 0.1
+      n_filters: 64
+      res_block_kernel: 3
+      res_block_skip_padding: false
+    gated: true
+    img_shape: null
+    learn_top_prior: true
+    logvar_lowerbound: -5
+    merge_type: residual
+    mode_3D: true
+    mode_pred: false
+    model_type: 3
+    monitor: val_loss
+    multiscale_lowres_separate_branch: false
+    multiscale_retain_spatial_dims: true
+    no_initial_downscaling: true
+    noise_model_ch1_fpath: /home/ashesh.ashesh/training/noise_model/2411/9/GMMNoiseModel_n2v_inputs-channel_234_1_ch0__6_4_Clip0.0-1.0_Sig0.125_UpNone_Norm0_bootstrap.npz
+    noise_model_ch2_fpath: /home/ashesh.ashesh/training/noise_model/2411/10/GMMNoiseModel_n2v_inputs-channel_234_1_ch1__6_4_Clip0.0-1.0_Sig0.125_UpNone_Norm0_bootstrap.npz
+    noise_model_ch3_fpath: /home/ashesh.ashesh/training/noise_model/2411/11/GMMNoiseModel_n2v_inputs-channel_234_1_ch2__6_4_Clip0.0-1.0_Sig0.125_UpNone_Norm0_bootstrap.npz
+    noise_model_learnable: false
+    noise_model_type: gmm
+    non_stochastic_version: false
+    nonlin: elu
+    num_targets: 3
+    predict_logvar: pixelwise
+    res_block_type: bacdbacd
+    skip_nboundary_pixels_from_loss: null
+    stochastic_skip: true
+    use_vampprior: false
+    var_clip_max: 20
+    z_dims:
+    - 128
+    - 128
+    - 128
+    - 128
+training:
+  desc: null
+  value:
+    batch_size: 16
+    earlystop_patience: 200
+    grad_clip_norm_value: 0.5
+    gradient_clip_algorithm: value
+    limit_train_batches: 2000
+    lr: 0.001
+    lr_scheduler_patience: 30
+    max_epochs: 400
+    num_workers: 4
+    pre_trained_ckpt_fpath: ''
+    precision: 16
+    test_fraction: 0.1
+    train_repeat_factor: null
+    val_fraction: 0.1
+    val_repeat_factor: null
+workdir:
+  desc: null
+  value: /group/jug/ashesh/training/disentangle/2506/D30-M3-S0-L8/6

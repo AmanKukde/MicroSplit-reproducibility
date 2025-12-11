@@ -5,6 +5,8 @@ from careamics.lvae_training.dataset import DataSplitType, DatasetConfig, DataTy
 def get_data_configs(
     image_size: list[int],
     num_channels: int,
+    grid_size : list[int],
+    sliding_window_flag = True,
     **kwargs,
 ) -> tuple[DatasetConfig, DatasetConfig, DatasetConfig]:
     """Get the data configurations to use at training time.
@@ -29,10 +31,10 @@ def get_data_configs(
     patch_overlap = (image_size[0], image_size[1] // 2, image_size[2] // 2)
     
     train_data_config = DatasetConfig(
-        data_type=DataType.HTH24Data, # TODO temporary hack
+        data_type=DataType.Care3D, # TODO temporary hack
         datasplit_type=DataSplitType.Train,
         image_size=image_size,
-        grid_size=patch_overlap,
+        grid_size=grid_size,
         num_channels=num_channels,
         multiscale_lowres_count=1,
         depth3D=image_size[0],
@@ -47,6 +49,7 @@ def get_data_configs(
         input_is_sum=False,
         padding_kwargs={"mode": "reflect"},
         overlapping_padding_kwargs={"mode": "reflect"},
+         sliding_window_flag = sliding_window_flag
         # start_alpha=[0.1] * num_channels,
         # end_alpha=[0.9] * num_channels,
     )

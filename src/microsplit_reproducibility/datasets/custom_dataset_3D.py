@@ -9,6 +9,7 @@ import tifffile
 from careamics.lvae_training.dataset import DataSplitType
 from careamics.lvae_training.dataset.utils.data_utils import get_datasplit_tuples
 from careamics.dataset.dataset_utils.dataset_utils import reshape_array
+from careamics.lvae_training.dataset.types import DataType 
 
 
 def load_one_file(fpath):
@@ -58,8 +59,12 @@ def get_train_val_data(
         val_fraction, test_fraction, len(data)
     )
     # FIXME: this is a hack to make the data split work with 2D custom datasets
-    # val_idx = train_idx
-    # test_idx = train_idx
+    val_idx = train_idx
+    test_idx = train_idx
+    # breakpoint()
+    # if data_config.data_type == DataType.Care3D:
+        # train_idx = [];
+
     if datasplit_type == DataSplitType.All:
         data = data.astype(np.float32)
     elif datasplit_type == DataSplitType.Train:

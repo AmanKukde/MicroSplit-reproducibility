@@ -315,3 +315,24 @@ def compute_high_snr_stats(highres_data, pred_unnorm, verbose=True):
         "ssim": ssim_list,
         "msssim": msssim_list,
     }
+def compute_psnr_only(highres_data, pred_unnorm, verbose=True):
+    """
+    Compute PSNR per channel and optionally print it.
+    Last dimension is assumed to be the channel dimension.
+    """
+    psnr_list = []
+
+    for ch_idx in range(highres_data[0].shape[-1]):
+        # Extract list of images per channel
+        gt_ch, pred_ch = _get_list_of_images_from_gt_pred(highres_data, pred_unnorm, ch_idx)
+
+        # Compute PSNR
+        psnr_list.append(avg_range_inv_psnr(gt_ch, pred_ch))
+
+    if verbose:
+        def psnr_str(psnr_tmp):
+            return f"{np.round(psnr_tmp[0], 2)}+-{np.round(psnr_tmp[1], 3)}"
+
+        print("PSNR on Highres", "\t".join([psnr_str(psnr_tmp) for psnr_tmp in psnr_list]))
+
+    return psnr_list
