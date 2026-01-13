@@ -1,0 +1,1 @@
+{'notebook': '/home/aman.kukde/sliding_windowed_tiling/microsplit/MicroSplit-reproducibility/examples/3D/custom_dataset/02_predict_sw.ipynb', 'outputdir': '/home/aman.kukde/sliding_windowed_tiling/microsplit/MicroSplit-reproducibility/examples/3D/custom_dataset/', 'sliding_window_flag': False, 'tag_time_flag': True, 'override_kwargs': {}}

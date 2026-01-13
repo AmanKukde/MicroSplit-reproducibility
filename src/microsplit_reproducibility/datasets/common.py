@@ -75,6 +75,56 @@ def create_train_val_datasets(
             torch.tensor(data_stats[1]["target"]),
         )
         return None, None, test_data, data_stats
+    elif train_config.data_type == DataType.Care3D:
+
+        max_val = 65535.0
+        mean_val = {'input': np.array([[[[[15424.802]]],
+
+
+        [[[15424.802]]],
+
+
+        [[[15424.802]]]]], dtype=np.float32), 'target': np.array([[[[[19880.13 ]]],
+
+
+        [[[13110.173]]],
+
+
+        [[[13283.93 ]]]]], dtype=np.float32)}
+
+        std_val= {'input': np.array([[[[[9367.818]]],
+
+
+        [[[9367.818]]],
+
+
+        [[[9367.818]]]]], dtype=np.float32), 'target': np.array([[[[[11206.183 ]]],
+
+
+        [[[ 7087.81  ]]],
+
+
+        [[[ 7593.5728]]]]], dtype=np.float32)}
+        # Configure test loader ONLY
+        test_config.max_val = max_val
+
+        test_data = dataset_class(
+            test_config,
+            datapath,
+            load_data_fn=load_data_func,
+            val_fraction=0.1,
+            test_fraction=0.1,
+        )
+
+        # Hardcode mean & std for test set
+        test_data.set_mean_std(mean_val, std_val)
+        data_stats = test_data.get_mean_std()
+        # Return dummy train/val, real test + stats (consistent with signature)
+        data_stats = (
+            torch.tensor(data_stats[0]["target"]),
+            torch.tensor(data_stats[1]["target"]),
+        )
+        return None, None, test_data, data_stats
     else:
         train_data = dataset_class(
             train_config,
@@ -108,8 +158,10 @@ def create_train_val_datasets(
             test_fraction=0.1,
         )
         mean_val, std_val = train_data.compute_mean_std()
-        print("mean_val:" mean_val)
-        print("std_val:"std_val)
+        print("mean_val:")
+        print(mean_val)
+        print("std_val:")
+        print(std_val)
         train_data.set_mean_std(mean_val, std_val)
         val_data.set_mean_std(mean_val, std_val)
         test_data.set_mean_std(mean_val, std_val)

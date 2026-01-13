@@ -6,7 +6,8 @@ def get_data_configs(
     image_size: list[int],
     num_channels: int,
     grid_size : list[int],
-    sliding_window_flag = True,
+    sliding_window_flag = False,
+    multiscale_lowres_count= 3,
     **kwargs,
 ) -> tuple[DatasetConfig, DatasetConfig, DatasetConfig]:
     """Get the data configurations to use at training time.
@@ -36,7 +37,7 @@ def get_data_configs(
         image_size=image_size,
         grid_size=grid_size,
         num_channels=num_channels,
-        multiscale_lowres_count=1,
+        multiscale_lowres_count=multiscale_lowres_count,
         depth3D=image_size[0],
         mode_3D=True,
         poisson_noise_factor=-1,

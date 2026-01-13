@@ -7,6 +7,8 @@ def get_data_configs(
     num_channels: int,
     sliding_window_flag:bool = False,
     grid_size = 32,
+    multiscale_lowres_count=1,
+    data_type = DataType.Care3D
 ) -> tuple[DatasetConfig, DatasetConfig, DatasetConfig]:
     """Get the data configurations to use at training time.
     
@@ -23,12 +25,12 @@ def get_data_configs(
         The train, validation and test data configurations.
     """
     train_data_config = DatasetConfig(
-        data_type=DataType.HTLIF24Data, # TODO temporary hack
+        data_type=data_type, # TODO temporary hack
         datasplit_type=DataSplitType.Train,
         image_size=image_size,
         grid_size=grid_size,
         num_channels=num_channels,
-        multiscale_lowres_count=3,
+        multiscale_lowres_count=multiscale_lowres_count,
         poisson_noise_factor=-1,
         enable_gaussian_noise=False,
         synthetic_gaussian_scale=100,
@@ -39,7 +41,8 @@ def get_data_configs(
         input_is_sum=False,
         padding_kwargs={"mode": "reflect"},
         overlapping_padding_kwargs={"mode": "reflect"},
-        sliding_window_flag = sliding_window_flag
+        sliding_window_flag = sliding_window_flag,
+        target_idx_list = [0,1]
         # start_alpha=[0.1] * num_channels,
         # end_alpha=[0.9] * num_channels,
     )

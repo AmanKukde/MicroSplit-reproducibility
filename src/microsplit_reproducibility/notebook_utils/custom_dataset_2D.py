@@ -17,7 +17,7 @@ import logging
 def load_pretrained_model(model: VAEModule, ckpt_path):
     device = get_device()
     ckpt_dict = torch.load(ckpt_path, map_location=device, weights_only=True)
-    model.load_state_dict(ckpt_dict['state_dict'], strict=False)
+    model.load_state_dict(ckpt_dict['state_dict'], strict=True)
     print(f"Loaded model from {ckpt_path}")
 
 
@@ -33,7 +33,7 @@ def get_unnormalized_predictions(
     """
     Get the stitched predictions which have been unnormlized.
     """
-    # You might need to adjust the batch size depending on the available memory
+    # # You might need to adjust the batch size depending on the available memory
     stitched_predictions, stitched_stds = get_predictions(
         model=model,
         dset=dset,
@@ -43,15 +43,21 @@ def get_unnormalized_predictions(
         tile_size=model.model.image_size,
         grid_size=grid_size,
     )
-    
+    # Use GPU stitching (default)
+    # stitched_predictions, stitched_stds = get_predictions(
+    #     model, dset, batch_size=batch_size, 
+    #     use_gpu_stitching=False,
+    #     inner_fraction=0.5 # Use middle 50% of each tile
+    # )
+
     # NOTE: this "data" key is actually the path the data is saved in ...
     # this should only be a very temporary solution
     # only to not have to change it in the notebooks
     # proper solution is:
 
-    # unnorm_stitched_predictionsunnorm_stitched_predictions = {}
-    # for fname, pred in stitched_predictions.items():
-    #     unnorm_stitched_predictions[fname] = pred*std_params['target'].squeeze().reshape(1,1,1,-1) + mean_params['target'].squeeze().reshape(1,1,1,-1)
+    unnorm_stitched_predictionsunnorm_stitched_predictions = {}
+    for fname, pred in stitched_predictions.items():
+        unnorm_stitched_predictions[fname] = pred*std_params['target'].squeeze().reshape(1,1,1,-1) + mean_params['target'].squeeze().reshape(1,1,1,-1)
 
     stitched_predictions = stitched_predictions[data_key]
     stitched_stds = stitched_stds[data_key]
