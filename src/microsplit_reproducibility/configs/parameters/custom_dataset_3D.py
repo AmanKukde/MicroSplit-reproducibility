@@ -24,7 +24,7 @@ def get_microsplit_parameters(
     earlystop_patience: int = 200,
     num_epochs: int = 10,
     num_workers: int = 4,
-    mmse_count: int = 10,
+    mmse_count: int = 50,
     grid_size: int = 32,
 ) -> dict:
     nm_paths = _get_nm_paths(noise_model_path, channel_idx_list=list(range(target_channels)))

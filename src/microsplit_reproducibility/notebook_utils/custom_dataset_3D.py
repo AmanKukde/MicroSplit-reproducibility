@@ -62,7 +62,7 @@ def get_unnormalized_predictions(
     ].squeeze().reshape(1, 1, 1, 1, -1) + mean_params["target"].squeeze().reshape(
         1, 1, 1, 1, -1
     )
-    return unnorm_stitched_predictions, stitched_predictions, stitched_stds
+    return unnorm_stitched_predictions#, stitched_predictions, stitched_stds
 
 def get_target(dset):
     return dset._data.copy()
